@@ -209,7 +209,7 @@ int mailimap_set_parse(mailstream * fd,
   MMAPString * buffer, struct mailimap_parser_context * parser_ctx, size_t * indx, struct mailimap_set ** result);
 
 LIBETPAN_EXPORT
-int mailimap_hack_date_time_parse(char * str,
+int mailimap_hack_date_time_parse(const char * str,
                                   struct mailimap_date_time ** result,
                                   size_t progr_rate,
                                   progress_function * progr_fun);

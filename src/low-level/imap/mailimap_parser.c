@@ -4487,7 +4487,7 @@ static int mailimap_date_time_no_quote_parse(mailstream * fd, MMAPString * buffe
 }
 
 LIBETPAN_EXPORT
-int mailimap_hack_date_time_parse(char * str,
+int mailimap_hack_date_time_parse(const char * str,
                                   struct mailimap_date_time ** result,
                                   size_t progr_rate,
                                   progress_function * progr_fun)
