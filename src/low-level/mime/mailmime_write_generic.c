@@ -1101,14 +1101,14 @@ int mailmime_data_write_driver(int (* do_write)(void *, const char *, size_t), v
     }
 
     if (buf.st_size != 0) {
-      text = mmap(NULL, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+      text = mmap(NULL, (size_t)buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
       if (text == (char *)MAP_FAILED) {
 	res = MAILIMF_ERROR_FILE;
 	goto close;
       }
       
       if (mime_data->dt_encoded) {
-	r = mailimf_string_write_driver(do_write, data, col, text, buf.st_size);
+	r = mailimf_string_write_driver(do_write, data, col, text, (size_t)buf.st_size);
 	if (r != MAILIMF_NO_ERROR) {
 	  res = r;
           goto unmap;
@@ -1116,14 +1116,14 @@ int mailmime_data_write_driver(int (* do_write)(void *, const char *, size_t), v
       }
       else {
 	r = mailmime_text_content_write_driver(do_write, data, col, mime_data->dt_encoding, istext,
-            text, buf.st_size);
+            text, (size_t)buf.st_size);
 	if (r != MAILIMF_NO_ERROR) {
 	  res = r;
           goto unmap;
         }
       }
       
-      munmap(text, buf.st_size);
+      munmap(text, (size_t)buf.st_size);
     }
     close(fd);
 
@@ -1133,7 +1133,7 @@ int mailmime_data_write_driver(int (* do_write)(void *, const char *, size_t), v
     break;
 
   unmap:
-    munmap(text, buf.st_size);
+    munmap(text, (size_t)buf.st_size);
   close:
     close(fd);
   err:

@@ -137,13 +137,13 @@ int generic_cache_read(char * filename, char ** result, size_t * result_len)
     goto err;
   }
 
-  str = mmap(NULL, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+  str = mmap(NULL, (size_t)buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
   if (str == (char *)MAP_FAILED) {
     res = MAIL_ERROR_FILE;
     goto close;
   }
 
-  mmapstr = mmap_string_new_len(str, buf.st_size);
+  mmapstr = mmap_string_new_len(str, (size_t)buf.st_size);
   if (mmapstr == NULL) {
     res = MAIL_ERROR_MEMORY;
     goto unmap;
@@ -156,18 +156,18 @@ int generic_cache_read(char * filename, char ** result, size_t * result_len)
   
   content = mmapstr->str;
 
-  munmap(str, buf.st_size);
+  munmap(str, (size_t)buf.st_size);
   close(fd);
 
   * result = content;
-  * result_len = buf.st_size;
+  * result_len = (size_t)buf.st_size;
 
   return MAIL_NO_ERROR;
 
  free:
   mmap_string_free(mmapstr);
  unmap:
-  munmap(str, buf.st_size);
+  munmap(str, (size_t)buf.st_size);
  close:
   close(fd);
  err:

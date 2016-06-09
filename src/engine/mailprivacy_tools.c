@@ -174,22 +174,22 @@ static char * dup_file(struct mailprivacy * privacy,
   if (r < 0)
     goto close_src;
   
-  mapping = mmap(NULL, stat_info.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+  mapping = mmap(NULL, (size_t)stat_info.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
   if (mapping == (char *)MAP_FAILED)
     goto close_src;
   
-  written = fwrite(mapping, 1, stat_info.st_size, dest_f);
+  written = fwrite(mapping, 1, (size_t)stat_info.st_size, dest_f);
   if (written != (size_t) stat_info.st_size)
     goto unmap;
   
-  munmap(mapping, stat_info.st_size);
+  munmap(mapping, (size_t)stat_info.st_size);
   close(fd);
   fclose(dest_f);
   
   return dest_filename;
   
  unmap:
-  munmap(mapping, stat_info.st_size);
+  munmap(mapping, (size_t)stat_info.st_size);
  close_src:
   close(fd);
  free_dest:
@@ -726,7 +726,7 @@ int mailprivacy_get_part_from_file(struct mailprivacy * privacy,
     goto close;
   }
 
-  mapping = mmap(NULL, stat_info.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+  mapping = mmap(NULL, (size_t)stat_info.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
   if (mapping == (char *)MAP_FAILED) {
     res = MAIL_ERROR_FILE;
     goto close;
@@ -735,7 +735,7 @@ int mailprivacy_get_part_from_file(struct mailprivacy * privacy,
   mime = NULL;
   /* check recursive parts if privacy is set */
   r = mailprivacy_get_mime(privacy, check_security, reencode,
-      mapping, stat_info.st_size, &mime);
+      mapping, (size_t)stat_info.st_size, &mime);
   if (r != MAIL_NO_ERROR) {
     res =  r;
     goto unmap;
@@ -753,7 +753,7 @@ int mailprivacy_get_part_from_file(struct mailprivacy * privacy,
     }
   }
 
-  munmap(mapping, stat_info.st_size);
+  munmap(mapping, (size_t)stat_info.st_size);
   
   close(fd);
 
@@ -762,7 +762,7 @@ int mailprivacy_get_part_from_file(struct mailprivacy * privacy,
   return MAIL_NO_ERROR;
   
  unmap:
-  munmap(mapping, stat_info.st_size);
+  munmap(mapping, (size_t)stat_info.st_size);
  close:
   close(fd);
  err:

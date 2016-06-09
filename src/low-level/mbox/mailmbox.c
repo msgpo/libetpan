@@ -154,10 +154,10 @@ int mailmbox_map(struct mailmbox_folder * folder)
   }
 
   if (folder->mb_read_only)
-    str = (char *) mmap(0, buf.st_size, PROT_READ,
+    str = (char *) mmap(0, (size_t)buf.st_size, PROT_READ,
 			MAP_PRIVATE, folder->mb_fd, 0);
   else
-    str = (char *) mmap(0, buf.st_size, PROT_READ | PROT_WRITE,
+    str = (char *) mmap(0, (size_t)buf.st_size, PROT_READ | PROT_WRITE,
 			MAP_SHARED, folder->mb_fd, 0);
   if (str == (char *)MAP_FAILED) {
     res = MAILMBOX_ERROR_FILE;
@@ -165,7 +165,7 @@ int mailmbox_map(struct mailmbox_folder * folder)
   }
   
   folder->mb_mapping = str;
-  folder->mb_mapping_size = buf.st_size;
+  folder->mb_mapping_size = (size_t)buf.st_size;
 
   return MAILMBOX_NO_ERROR;
 

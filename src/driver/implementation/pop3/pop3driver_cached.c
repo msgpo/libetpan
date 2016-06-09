@@ -894,7 +894,7 @@ static int pop3driver_cached_get_message_by_uid(mailsession * session,
 				  const char * uid, mailmessage ** result)
 {
   mailpop3 * pop3;
-  struct mailpop3_msg_info * msg_info;
+  struct mailpop3_msg_info * msg_info = NULL;
   int found;
   unsigned int i;
   

@@ -356,7 +356,7 @@ int mhdriver_fetch_size(mailsession * session, uint32_t indx,
   if (r == -1)
     return MAIL_ERROR_FETCH;
 
-  * result = buf.st_size;
+  * result = (size_t)buf.st_size;
 
   return MAIL_NO_ERROR;
 }

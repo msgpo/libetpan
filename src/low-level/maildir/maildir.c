@@ -626,13 +626,13 @@ int maildir_message_add_file_uid(struct maildir * md, int fd,
   if (fstat(fd, &buf) == -1)
     return MAILDIR_ERROR_FILE;
   
-  message = mmap(NULL, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+  message = mmap(NULL, (size_t)buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
   if (message == (char *)MAP_FAILED)
     return MAILDIR_ERROR_FILE;
   
-  r = maildir_message_add_uid(md, message, buf.st_size, uid, max_uid_len);
+  r = maildir_message_add_uid(md, message, (size_t)buf.st_size, uid, max_uid_len);
   
-  munmap(message, buf.st_size);
+  munmap(message, (size_t)buf.st_size);
   
   return r;
 }

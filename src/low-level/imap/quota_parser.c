@@ -380,8 +380,8 @@ int mailimap_quota_parse(int calling_parser, mailstream * fd,
   int r;
   struct mailimap_quota_quota_data * quota_data = 0;
   struct mailimap_quota_quotaroot_data * quotaroot_data = 0;
-  void * data;
-  int type;
+  void * data = NULL;
+  int type = 0;
 
   switch (calling_parser)
   {

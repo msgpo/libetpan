@@ -1115,7 +1115,7 @@ static int imapdriver_starttls(mailsession * session)
 {
   mailimap * imap;
   int r;
-  struct mailimap_capability_data * cap_data;
+  struct mailimap_capability_data * cap_data = NULL;
   clistiter * cur;
   int starttls;
   int capability_available;

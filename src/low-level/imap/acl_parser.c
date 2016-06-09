@@ -394,9 +394,11 @@ int mailimap_acl_parse(int calling_parser, mailstream * fd,
 
   int type;
 
-	acl_data = NULL;
-	lr_data = NULL;
-	mr_data = NULL;
+  acl_data = NULL;
+  lr_data = NULL;
+  mr_data = NULL;
+  type = 0;
+  data = NULL;
 
   switch (calling_parser)
   {

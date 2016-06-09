@@ -334,7 +334,7 @@ int mailmh_folder_update(struct mailmh_folder * folder)
           chashdatum key;
           chashdatum data;
 
-	  msg_info = mailmh_msg_info_new(indx, buf.st_size, buf.st_mtime);
+	  msg_info = mailmh_msg_info_new(indx, (size_t)buf.st_size, buf.st_mtime);
 	  if (msg_info == NULL) {
 	    res = MAILMH_ERROR_MEMORY;
 	    goto closedir;
@@ -689,7 +689,7 @@ int mailmh_folder_get_message_size(struct mailmh_folder * folder,
   if (r < 0)
     return MAILMH_ERROR_FILE;
 
-  * result = buf.st_size;
+  * result = (size_t)buf.st_size;
 
   return MAILMH_NO_ERROR;
 }
@@ -805,13 +805,13 @@ int mailmh_folder_add_message_file_uid(struct mailmh_folder * folder,
   if (fstat(fd, &buf) == -1)
     return MAILMH_ERROR_FILE;
 
-  message = mmap(NULL, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+  message = mmap(NULL, (size_t)buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
   if (message == (const char *)MAP_FAILED)
     return MAILMH_ERROR_FILE;
 
-  r = mailmh_folder_add_message_uid(folder, message, buf.st_size, pindex);
+  r = mailmh_folder_add_message_uid(folder, message, (size_t)buf.st_size, pindex);
   
-  munmap(message, buf.st_size);
+  munmap(message, (size_t)buf.st_size);
 
   return r;
 }

@@ -62,8 +62,8 @@ mailimap_namespace_extension_parse(int calling_parser, mailstream * fd,
   int r;
   struct mailimap_namespace_data * namespace_data = NULL;
   struct mailimap_extension_data * ext_data;
-  void * data;
-  int type;
+  void * data = NULL;
+  int type = 0;
   size_t cur_token;
   
   cur_token = * indx;

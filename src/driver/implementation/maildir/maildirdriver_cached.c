@@ -1039,7 +1039,7 @@ static int get_message(mailsession * session,
   }
   
   r = mailmessage_init(msg, session, maildir_cached_message_driver,
-      num, stat_info.st_size);
+      num, (size_t)stat_info.st_size);
   if (r != MAIL_NO_ERROR) {
     mailmessage_free(msg);
     res = r;
@@ -1138,7 +1138,7 @@ static int get_message_by_uid(mailsession * session,
   }
   
   r = mailmessage_init(msg, session, maildir_cached_message_driver,
-      indx, stat_info.st_size);
+      indx, (size_t)stat_info.st_size);
   if (r != MAIL_NO_ERROR) {
     mailmessage_free(msg);
     res = r;

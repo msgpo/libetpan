@@ -161,7 +161,7 @@ int maildir_get_messages_list(mailsession * session, struct maildir * md,
     }
     
     r = mailmessage_init(msg, session, message_driver,
-        i + 1, stat_info.st_size);
+        i + 1, (size_t)stat_info.st_size);
     if (r != MAIL_NO_ERROR) {
       mailmessage_free(msg);
       res = r;

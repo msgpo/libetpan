@@ -662,7 +662,7 @@ static int get_message_by_uid(mailsession * session,
   }
   
   r = mailmessage_init(msg, session, maildir_message_driver,
-      0, stat_info.st_size);
+      0, (size_t)stat_info.st_size);
   if (r != MAIL_NO_ERROR) {
     mailmessage_free(msg);
     res = r;
